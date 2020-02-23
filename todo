@@ -1,0 +1,4 @@
+- execute tests for different browsers, and retrieve if not possible
+- use start vars for specify browser or binary to browse with
+- implement --help startvar
+ 

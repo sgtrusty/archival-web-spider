@@ -1,0 +1,30 @@
+sudo: required
+dist: xenial # would use trusty, but testing for python3.6>=
+#addons:
+#  chrome: stable
+before_install:
+  #- google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - wget http://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+  - mkdir /tmp/bin
+  - unzip chromedriver_linux64.zip -d /tmp/bin
+  - pip install codecov
+#w  - pip install coverage
+language: python
+python:
+  - "3.6"      # current default Python on Travis CI
+  - "3.7"
+  - "3.8"
+#  - "3.8-dev"  # 3.8 development branch
+#  - "nightly"  # nightly build
+# command to install dependencies
+install:
+  - pip install pytest pytest-cov
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  - pip install -e .
+  - pytest --cov=./
+after_success:
+  - codecov #--file 
+env:
+  - CHROME_DRIVER_PATH=/tmp/bin/chromedriver

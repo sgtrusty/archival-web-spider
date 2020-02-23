@@ -1,0 +1,33 @@
+https://www.python.org/dev/peps/pep-0008/
+http://chromedriver.chromium.org/getting-started
+
+https://www.programcreek.com/python/example/105361/bs4.element.Tag
+http://akul.me/blog/2016/beautifulsoup-cheatsheet/
+http://zetcode.com/python/beautifulsoup/
+https://pythonexamples.org/python-print-to-console-output/
+https://selenium-python.readthedocs.io/api.html#selenium.webdriver.remote.webelement.WebElement.get_attribute
+https://realpython.com/python-web-scraping-practical-introduction/
+https://www.freecodecamp.org/news/how-to-scrape-websites-with-python-and-beautifulsoup-5946935d93fe/
+https://www.scrapingbee.com/blog/web-scraping-101-with-python/
+https://www.thepythoncode.com/article/download-files-python
+http://scraping.pro/what-is-selenium-webdriver/
+http://scraping.pro/selenium-ide-and-web-scraping/ # can it run python?
+https://towardsdatascience.com/how-to-web-scrape-with-python-in-4-minutes-bc49186a8460
+https://medium.com/ymedialabs-innovation/web-scraping-using-beautiful-soup-and-selenium-for-dynamic-page-2f8ad15efe25
+https://www.analyticsvidhya.com/blog/2015/10/beginner-guide-web-scraping-beautiful-soup-python/
+
+https://towardsdatascience.com/web-scraping-with-python-a-to-copy-z-277a445d64c7
+https://www.tutorialspoint.com/python_web_scraping/python_web_scraping_dynamic_websites.htm
+https://first-web-scraper.readthedocs.io/en/latest/
+
+https://www.pythoncentral.io/execute-python-script-file-shell/
+https://stackoverflow.com/questions/26943256/string-replace-doesnt-appear-to-be-working
+https://stackoverflow.com/questions/3523054/python-string-replace-not-replacing-characters
+https://bytebaker.com/2008/11/03/switch-case-statement-in-python/
+https://stackoverflow.com/questions/541390/extracting-extension-from-filename-in-python
+NOT: 	https://stackoverflow.com/questions/2073541/search-and-replace-in-html-with-beautifulsoup
+	https://stackoverflow.com/questions/46662945/extract-from-webpage-using-bs4-and-python
+	https://stackoverflow.com/questions/39982772/web-scraping-from-a-website-with-a-static-url # Since you need to perform actions prior to scraping, you need to use a headless browser like phantomjs. It's a bit more challenging than basic scraping, but it will allow you to type in addresses programmatically and then scrape the resulting data of the page that is returned.
+	https://stackoverflow.com/questions/17975471/selenium-with-scrapy-for-dynamic-page
+TODO: 	https://stackoverflow.com/questions/27307131/selenium-webdriver-how-do-i-find-all-of-an-elements-attributes ; https://stackoverflow.com/questions/30324760/how-to-get-attribute-of-element-from-selenium
+	https://github.com/julia-git/webscraping_ny_mta/blob/master/Webscraping.ipynb # Jupyter Notebook
