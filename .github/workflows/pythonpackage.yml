@@ -26,13 +26,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip3 install -r requirements.txt
     - name: Instantiate package
       run: |
-        pip install -e .
+        pip3 install -e .
     - name: Lint with flake8
       run: |
-        pip install flake8
+        pip3 install flake8
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
@@ -40,5 +40,5 @@ jobs:
     - name: Test with pytest
       run: |
         export CHROME_DRIVER_PATH=chromedriver
-        pip install pytest
+        pip3 install pytest
         pytest
