@@ -184,7 +184,7 @@ def crawl(url, *positional_parameters, **keyword_parameters):
         fetchedUris.append(elem_url)
     
         options = {
-            "img": DIRECTORY_IMAGES,
+            "img": DIRECTORY_IMAGES, # TODO: srcset
             "css" : DIRECTORY_STYLE,
             "script" : DIRECTORY_SCRIPT, # TODO: data-src, integrity, crossorigin
             "ico" : DIRECTORY_ICONS
