@@ -90,7 +90,6 @@ def download(url, pathname):
         url = quote_plus(url)
         url = (url[:255]) if len(url) > 255 else url
         filename = filename + url
-    print("DEBUG: " + filename)
     
     # progress bar, changing the unit to bytes instead of iteration (default by tqdm)
     text = "Downloading {filename}".format(filename=filename)

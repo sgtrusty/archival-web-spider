@@ -27,6 +27,13 @@ Python project which uses mainly BeautifulSoup and Selenium Webdriver in order t
 - Make decentralization possible due to browsing websites offline, saved per domain
 - Add as pip package
 
+## Troubleshooting
+
+### Chrome not running!
+With issues like `selenium.common.exceptions.WebDriverException: Message: unknown error: session deleted because of page crash`, do the following:
+> Try `ps aux` and see if there are multiple processes running. with `killall -9 chromedriver` and `killall -9 chrome` you can make sure to free up processes to run the app again.
+> This is usually a result of crashes mid-runs, and is easily fixable.
+
 ## Donate
 Donate if you can spare a few bucks for pizza, coffee or just general sustenance. I appreciate it.
 
