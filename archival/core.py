@@ -28,10 +28,10 @@
 import sys
 import os
 
-from utils import generate_directories
-from archiver import perform as perform_archival
+from .utils import generate_directories
+from .archiver import Archiver
 
-def crawl(crawl_url, *positional_parameters, **keyword_parameters):
+def crawl(archival_url, *positional_parameters, **keyword_parameters):
     #Parse the html in the 'page' variable, and store it in Beautiful Soup format
     driver_path = None
     if('driver' in keyword_parameters):
@@ -42,11 +42,11 @@ def crawl(crawl_url, *positional_parameters, **keyword_parameters):
         except KeyError as e:
             raise KeyError("Expect CHROME_DRIVER_PATH as environment variable")
 
-    output_dir = ''
-    if('output_dir' in keyword_parameters):
-        output_dir = keyword_parameters['output_dir']
+    directory_base = ''
+    if('directory_base' in keyword_parameters):
+        directory_base = keyword_parameters['output_dir']
     else:
-        output_dir = "output/"
+        directory_base = "output/"
     
     test_scenario = None
     if('test_scenario' in keyword_parameters):
@@ -61,8 +61,16 @@ def crawl(crawl_url, *positional_parameters, **keyword_parameters):
     # TODO: test_scenario as global const // or static var // or env var // or make config helper // anyway idk
     
     # TODO: can remove old ones? or confirm from user input
-    generate_directories(output_dir, [directory_image, directory_script, directory_style, directory_icon], test_scenario)
+    generate_directories(directory_base, [directory_image, directory_script, directory_style, directory_icon], test_scenario)
     
     # TODO: phase perform_archival to `setup`, `add_directory`, `perform` lifecycle
-    perform_archival(driver_path, crawl_url, directory_image, directory_script, directory_style, directory_icon, test_scenario)
+    archiver = Archiver(test_scenario=test_scenario)
+    archiver.add_directory_base(directory_base)
+    archiver.add_directory_image(directory_image)
+    archiver.add_directory_script(directory_script)
+    archiver.add_directory_style(directory_style)
+    archiver.add_directory_icon(directory_icon)
+    archiver.driver_start(driver_path)
+    archiver.perform(archival_url)
+    
     return True

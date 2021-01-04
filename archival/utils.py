@@ -1,15 +1,18 @@
+from requests import get as requests_get
 from urllib.parse import urljoin, urlparse, quote_plus
 from selenium import webdriver
 from os.path import exists as path_exists
+from os.path import join as path_join
 from os import makedirs
+from tqdm import tqdm
 #from os.path import splitext as split_text
     
-# def is_valid(url):
-    # """
-    # Checks whether `url` is a valid URL.
-    # """
-    # parsed = urlparse(url)
-    # return bool(parsed.netloc) and bool(parsed.scheme)
+def is_valid(url):
+    """
+    Checks whether `url` is a valid URL.
+    """
+    parsed = urlparse(url)
+    return bool(parsed.netloc) and bool(parsed.scheme)
 
 def download_asset(url, output_dir, path_dir, test_scenario):
     """
@@ -17,7 +20,7 @@ def download_asset(url, output_dir, path_dir, test_scenario):
     """
 
     # get the file name -- todo: custom filenames
-    filename = os.path.join(path_dir, url.split("/")[-1])
+    filename = path_join(path_dir, url.split("/")[-1])
     if(filename == path_dir):
         url = quote_plus(url)
         url = (url[:255]) if len(url) > 255 else url
@@ -28,7 +31,7 @@ def download_asset(url, output_dir, path_dir, test_scenario):
     
     if(test_scenario != True):
         # download the body of response by chunk, not immediately
-        response = requests.get(url, stream=True)
+        response = requests_get(url, stream=True)
         # get the total file size
         file_size = int(response.headers.get("Content-Length", 0))
         
