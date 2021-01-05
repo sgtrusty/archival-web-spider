@@ -88,6 +88,9 @@ class Archiver(object):
                 continue
 
             elem_url_static = relative_to_static(self.archival_url, elem_url);
+            if(not elem_url_static): # FIXME: debug this and impl. proper fix
+                continue
+            
             print("Fixing url from " + elem_url + " to " + elem_url_static)
             elem.attrs["href"] = elem_url_static
             

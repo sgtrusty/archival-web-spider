@@ -21,14 +21,11 @@ def download_asset(url, output_dir, path_dir, test_scenario):
 
     # get the file name -- todo: custom filenames
     filename = path_join(path_dir, url.split("/")[-1])
-    if(filename == path_dir):
-        url = quote_plus(url)
-        url = (url[:255]) if len(url) > 255 else url
-        filename = filename + url
     
     # progress bar, changing the unit to bytes instead of iteration (default by tqdm)
     text = "Downloading {filename}".format(filename=filename)
     
+    ## TODO : option to not download again if it exists ( check @ output_dir + filename)
     if(test_scenario != True):
         # download the body of response by chunk, not immediately
         response = requests_get(url, stream=True)
@@ -36,6 +33,12 @@ def download_asset(url, output_dir, path_dir, test_scenario):
         file_size = int(response.headers.get("Content-Length", 0))
         
         progress = tqdm(response.iter_content(1024), total=file_size, unit="B", unit_scale=True, unit_divisor=1024, desc=text)
+        
+        # make writeable filename in case it is non-extension url
+        if(filename == path_dir):
+            url = quote_plus(url)
+            url = (url[:255]) if len(url) > 255 else url
+            filename = filename + url
         
         # added output_dir instead for relative `filename` reading
         with open(output_dir + filename, "wb") as f:
@@ -51,7 +54,7 @@ def relative_to_static(url, elem):
     # make the URL absolute by joining domain with the URL that is just extracted
     elem_url = urljoin(url, elem)
     try:
-        pos = elem_url.index("?") # make sure it doesnt include urlvars
+        pos = elem_url.index("?") # TODO: make urlvars disabled by default w/ option, but option to enable
         elem_url = elem_url[:pos]
     except ValueError:
         pass
