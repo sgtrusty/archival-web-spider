@@ -17,13 +17,15 @@ class Archiver(object):
     def add_directory_icon(self, directory_icon):
         self.directory_icon = directory_icon
 
+    def archive_links_process_attr(self, elem, attr):
+        if(attr in elem.attrs):
+            elem.attrs.pop(attr)
+
     def archive_links_process(self, elem):
         path_dir = self.directory_style
         if(elem.attrs.get("type") == "text/css" or (elem["rel"] and elem["rel"][0] == "stylesheet")):
-            if("integrity" in elem.attrs):
-                elem.attrs.pop("integrity")
-            if("crossorigin" in elem.attrs):
-                elem.attrs.pop("crossorigin")
+            archive_links_process_attr("crossorigin")
+            archive_links_process_attr("integrity")
         else:
             path_dir = self.directory_icon
             
@@ -70,10 +72,10 @@ class Archiver(object):
         # change all a hrefs
         for elem in tqdm(self.soup.find_all("a"), "Fixing links"):
             elem_url_static = parse_nav_url(elem.attrs.get("href"))
-            if(not elem_url_static):
+            if(not elem_url_static): # FIXME: run proper regression test
                 continue
             
-            print("Fixing url from " + elem_url + " to " + elem_url_static)
+            print("Fixing url from " + elem_url_static + " to " + elem_url)
             elem.attrs["href"] = elem_url_static
             
         return True
@@ -95,7 +97,7 @@ class Archiver(object):
             return None
 
         elem_url_static = relative_to_static(self.archival_url, elem_url);
-        if(not elem_url_static): # FIXME: debug this and impl. proper fix
+        if(not elem_url_static):
             return None
         
         return elem_url_static

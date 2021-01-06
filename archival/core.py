@@ -31,27 +31,7 @@ import os
 from .utils import generate_directories
 from .archiver import Archiver
 
-def crawl(archival_url, *positional_parameters, **keyword_parameters):
-    #Parse the html in the 'page' variable, and store it in Beautiful Soup format
-    driver_path = None
-    if('driver' in keyword_parameters):
-        driver_path = keyword_parameters['driver']
-    else:
-        try:
-            driver_path = os.environ["CHROME_DRIVER_PATH"] # base port was /usr/lib/chromium/chromedriver
-        except KeyError as e:
-            raise KeyError("Expect CHROME_DRIVER_PATH as environment variable")
-
-    directory_base = ''
-    if('directory_base' in keyword_parameters):
-        directory_base = keyword_parameters['output_dir']
-    else:
-        directory_base = "output/"
-    
-    test_scenario = None
-    if('test_scenario' in keyword_parameters):
-        test_scenario = keyword_parameters['test_scenario']
-    
+def crawl_finalize(archival_url, driver_path, directory_base, test_scenario):
     #Also the script that check if the directory exists, if it don't exist create it.
     directory_image = 'images/'
     directory_script = 'scripts/'
@@ -74,3 +54,26 @@ def crawl(archival_url, *positional_parameters, **keyword_parameters):
     archiver.perform(archival_url)
     
     return True
+
+def crawl(archival_url, *positional_parameters, **keyword_parameters):
+    #Parse the html in the 'page' variable, and store it in Beautiful Soup format
+    driver_path = None
+    if('driver' in keyword_parameters):
+        driver_path = keyword_parameters['driver']
+    else:
+        try:
+            driver_path = os.environ["CHROME_DRIVER_PATH"] # base port was /usr/lib/chromium/chromedriver
+        except KeyError as e:
+            raise KeyError("Expect CHROME_DRIVER_PATH as environment variable")
+
+    directory_base = ''
+    if('directory_base' in keyword_parameters):
+        directory_base = keyword_parameters['output_dir']
+    else:
+        directory_base = "output/"
+    
+    test_scenario = None
+    if('test_scenario' in keyword_parameters):
+        test_scenario = keyword_parameters['test_scenario']
+        
+    return crawl_finalize(archival_url, driver_path, directory_base, test_scenario)
