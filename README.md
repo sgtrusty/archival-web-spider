@@ -27,6 +27,7 @@ Python project which uses mainly BeautifulSoup and Selenium Webdriver in order t
 - Make decentralization possible due to browsing websites offline, saved per domain
 - Add as pip package
 - Zipper to minimize manual operations by automatizing and streamline
+- Add silent mode
 
 ## Troubleshooting
 
