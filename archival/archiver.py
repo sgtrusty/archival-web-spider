@@ -1,4 +1,5 @@
 from tqdm import tqdm
+from sys import platform as current_platform
 from bs4 import BeautifulSoup as bs
 from .utils import relative_to_static, setup_browser, download_asset
 
@@ -16,69 +17,6 @@ class Archiver(object):
         self.directory_style = directory_style
     def add_directory_icon(self, directory_icon):
         self.directory_icon = directory_icon
-
-    def archive_links_process_attr(self, elem, attr):
-        if(attr in elem.attrs):
-            elem.attrs.pop(attr)
-
-    def archive_links_process(self, elem):
-        path_dir = self.directory_style
-        if(elem.attrs.get("type") == "text/css" or (elem["rel"] and elem["rel"][0] == "stylesheet")):
-            archive_links_process_attr("crossorigin")
-            archive_links_process_attr("integrity")
-        else:
-            path_dir = self.directory_icon
-            
-        return path_dir
-
-    def archive_links(self):
-        self.fetchedUris = []
-        for elem in tqdm(self.soup.find_all("link"), "Extracting links (css and ico)"):
-            elem_url = parse_asset_url(elem.attrs.get("href"))
-            if(not elem_url):
-                continue
-            
-            path_dir = archive_links_process(elem)
-            file_dl = download_asset(elem_url, self.directory_base, path_dir, self.test_scenario)
-            elem.attrs["href"] = file_dl
-        
-        return True
-
-    def archive_scripts(self):
-        self.fetchedUris = []
-        for elem in tqdm(self.soup.find_all("script"), "Extracting scripts (js)"):
-            elem_url = parse_asset_url(elem.attrs.get("src"))
-            if(not elem_url):
-                continue
-            
-            file_dl = download_asset(elem_url, self.directory_base, self.directory_script, self.test_scenario)
-            elem.attrs["src"] = file_dl
-        
-        return True
-
-    def archive_images(self):
-        self.fetchedUris = []
-        for elem in tqdm(self.soup.find_all("img"), "Extracting images (img)"):
-            elem_url = parse_asset_url(elem.attrs.get("src"))
-            if(not elem_url):
-                continue
-            
-            file_dl = download_asset(elem_url, self.directory_base, self.directory_image, self.test_scenario)
-            elem.attrs["src"] = file_dl
-        
-        return True
-
-    def archive_urls(self):
-        # change all a hrefs
-        for elem in tqdm(self.soup.find_all("a"), "Fixing links"):
-            elem_url_static = parse_nav_url(elem.attrs.get("href"))
-            if(not elem_url_static): # FIXME: run proper regression test
-                continue
-            
-            print("Fixing url from " + elem_url_static + " to " + elem_url)
-            elem.attrs["href"] = elem_url_static
-            
-        return True
         
     def parse_asset_url(self, elem_url):
         if(not elem_url):
@@ -86,9 +24,9 @@ class Archiver(object):
             return None
             
         elem_url = relative_to_static(self.archival_url, elem_url);
-        if(not elem_url or elem in fetchedUris):
+        if(not elem_url or elem_url in self.fetchedUris):
             return None
-        fetchedUris.append(elem_url)
+        self.fetchedUris.append(elem_url)
         
         return elem_url
     
@@ -101,6 +39,70 @@ class Archiver(object):
             return None
         
         return elem_url_static
+
+    def archive_links_process_attr(self, elem, attr):
+        if(attr in elem.attrs):
+            elem.attrs.pop(attr)
+
+    def archive_links_process(self, elem):
+        path_dir = self.directory_style
+        if(elem.attrs.get("type") == "text/css" or (elem["rel"] and elem["rel"][0] == "stylesheet")):
+            self.archive_links_process_attr(elem, "crossorigin")
+            self.archive_links_process_attr(elem, "integrity")
+        else:
+            path_dir = self.directory_icon
+            
+        return path_dir
+
+    def archive_links(self):
+        self.fetchedUris = []
+        for elem in tqdm(self.soup.find_all("link"), "Extracting links (css and ico)"):
+            elem_url = self.parse_asset_url(elem.attrs.get("href"))
+            if(not elem_url):
+                continue
+            
+            path_dir = self.archive_links_process(elem)
+            file_dl = download_asset(elem_url, self.directory_base, path_dir, self.test_scenario)
+            elem.attrs["href"] = file_dl
+        
+        return True
+
+    def archive_scripts(self):
+        self.fetchedUris = []
+        for elem in tqdm(self.soup.find_all("script"), "Extracting scripts (js)"):
+            elem_url = self.parse_asset_url(elem.attrs.get("src"))
+            if(not elem_url):
+                continue
+            
+            file_dl = download_asset(elem_url, self.directory_base, self.directory_script, self.test_scenario)
+            elem.attrs["src"] = file_dl
+        
+        return True
+
+    def archive_images(self):
+        self.fetchedUris = []
+        for elem in tqdm(self.soup.find_all("img"), "Extracting images (img)"):
+            elem_url = self.parse_asset_url(elem.attrs.get("src"))
+            if(not elem_url):
+                continue
+            
+            file_dl = download_asset(elem_url, self.directory_base, self.directory_image, self.test_scenario)
+            elem.attrs["src"] = file_dl
+        
+        return True
+
+    def archive_urls(self):
+        # change all a hrefs
+        for elem in tqdm(self.soup.find_all("a"), "Fixing links"):
+            elem_url = elem.attrs.get("href")
+            elem_url_static = self.parse_nav_url(elem_url)
+            if(not elem_url_static): # FIXME: run proper regression test
+                continue
+            
+            print("Fixing url from " + elem_url_static + " to " + elem_url)
+            elem.attrs["href"] = elem_url_static
+            
+        return True
     
     def driver_start(self, driver_path):
         self.driver = setup_browser(driver_path)
@@ -121,7 +123,14 @@ class Archiver(object):
         self.archive_urls()
             
         if(self.test_scenario != True):
-            with open(self.directory_base + "index.html", "w") as f:
-                print(self.soup.prettify(), file=f)
+            f = None
+            file_content = ""
+            if(current_platform == "win32"):
+                file_content = str(self.soup.prettify())
+                f = open(self.directory_base + "index.html", "w", encoding='utf-8')
+            else:
+                file_content = self.soup.prettify()
+                f = open(self.directory_base + "index.html", "w")
+            print(file_content, file=f)
                 
         return True

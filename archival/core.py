@@ -64,7 +64,8 @@ def crawl(archival_url, *positional_parameters, **keyword_parameters):
         try:
             driver_path = os.environ["CHROME_DRIVER_PATH"] # base port was /usr/lib/chromium/chromedriver
         except KeyError as e:
-            raise KeyError("Expect CHROME_DRIVER_PATH as environment variable")
+            print("Expect `CHROME_DRIVER_PATH` as environment variable or as 'driver' parameter, will try to use PATH")
+            #raise KeyError("Expect CHROME_DRIVER_PATH as environment variable")
 
     directory_base = ''
     if('directory_base' in keyword_parameters):

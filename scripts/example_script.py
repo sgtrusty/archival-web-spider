@@ -1,7 +1,10 @@
 #!/usr/bin/env python
-import archival.core as archiver
 import argparse, sys
 import os
+# import archival.core as archiver
+## or
+sys.path.append("..")
+import archival.core as archiver
 
 def parse_args():
     parser = argparse.ArgumentParser(description = "Example description here")

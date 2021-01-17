@@ -131,3 +131,7 @@ dmypy.json
 # Package output files
 output/
 scripts/output/
+
+# Custom
+**/*.log
+**/*.swp

@@ -72,7 +72,12 @@ def setup_browser(driver_path):
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--incognito')
     options.add_argument('--headless')
-    return webdriver.Chrome(driver_path, options=options)
+    driver = None
+    if(driver_path != None):
+        driver = webdriver.Chrome(driver_path, options=options)
+    else:
+        driver = webdriver.Chrome(options=options)
+    return driver
 
 def generate_directories(output_dir, output_subdirs, test_scenario):
     if test_scenario == True:

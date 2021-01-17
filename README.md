@@ -26,13 +26,24 @@ Python project which uses mainly BeautifulSoup and Selenium Webdriver in order t
 	- [Anki Flash Cards](https://apps.ankiweb.net/)
 - Make decentralization possible due to browsing websites offline, saved per domain
 - Add as pip package
+- Zipper to minimize manual operations by automatizing and streamline
 
 ## Troubleshooting
 
-### Chrome not running!
+### Common Issues:
+
+#### Chrome not running!
 With issues like `selenium.common.exceptions.WebDriverException: Message: unknown error: session deleted because of page crash`, do the following:
-> Try `ps aux` and see if there are multiple processes running. with `killall -9 chromedriver` and `killall -9 chrome` you can make sure to free up processes to run the app again.
+> Try `ps aux` and see if there are multiple processes running.
+> In linux, with `killall -9 chromedriver` and `killall -9 chrome` you can make sure to free up processes to run the app again.
+> In windows, the command is: `taskkill /F /IM chrome.exe`.
 > This is usually a result of crashes mid-runs, and is easily fixable.
+
+####   ..."encodings\cp1252.py", line 19, in encode...
+UnicodeEncodeError: 'charmap' codec can't encode characters in position XXXX-YYYY: character maps to <undefined>
+> This is a windows encoding issue and it may be possible to fix by running the following commands before running the script:
+> `set PYTHONIOENCODING=utf-8`
+> `set PYTHONLEGACYWINDOWSSTDIO=utf-8`
 
 ## Donate
 Donate if you can spare a few bucks for pizza, coffee or just general sustenance. I appreciate it.
