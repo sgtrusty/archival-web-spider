@@ -6,7 +6,7 @@
 [![Compliant with TravisCI standard](https://travis-ci.com/netrules/archival-web-spider.svg?branch=master)](https://travis-ci.com/netrules/archival-web-spider)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/netrules/archival-web-spider) 
 [![Accepting contributions](https://codeclimate.com/github/netrules/archival-web-spider/badges/gpa.svg)](https://codeclimate.com/github/netrules/archival-web-spider) 
-[![Vulnerabilities](https://snyk.io/test/github/netrules/archival-web-spider/badge.svg)](https://snyk.io/test/github/netrules/archival-web-spider) 
+[![Known Vulnerabilities](https://snyk.io/test/github/netrules/archival-web-spider/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/netrules/archival-web-spider?targetFile=requirements.txt)
 [![Code coverage](https://codecov.io/gh/netrules/archival-web-spider/branch/master/graph/badge.svg)](https://codecov.io/gh/netrules/archival-web-spider) 
 [![HitCount](https://hits.dwyl.com/netrules/archival-web-spider.svg)](https://hits.dwyl.com/netrules/archival-web-spider) 
 
