@@ -1,4 +1,4 @@
-# Archival Spider [![Donate to the founder](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NF5FAJMF6WQSG&currency_code=USD&source=url) 
+# Archival Spider [![Donate to the founder](https://img.shields.io/badge/Donate-Ko‒fi-green.svg)](https://ko-fi.com/surbubianjesus) 
 
 #### Efficient means to documenting your projects info.</h4>
 [![Educational/Experimental project](https://img.shields.io/badge/python-experimental-orange.svg?style=flat)](https://github.com/netrules/archival-web-spider)
@@ -49,4 +49,4 @@ UnicodeEncodeError: 'charmap' codec can't encode characters in position XXXX-YYY
 ## Donate
 Donate if you can spare a few bucks for pizza, coffee or just general sustenance. I appreciate it.
 
-[![Donate Button](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=NF5FAJMF6WQSG&currency_code=USD&source=url)
+[![Donate Button](https://img.shields.io/badge/Donate-Ko‒fi-green.svg)](https://ko-fi.com/surbubianjesus)
